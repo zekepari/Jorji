@@ -1,10 +1,9 @@
 const noblox = require('noblox.js');
-const config = require('./config');
+const config = require('../config');
 
-async function handleRankCommand(interaction) {
+async function handleRankCommand(interaction, guildId) {
     const { options, user, channelId } = interaction;
 
-    // Check if the command is used in the correct Army channel
     if (channelId !== config.discordChannelIdTable.Army) {
         await interaction.reply('This command can only be used in the Army rank channel.');
         return;
