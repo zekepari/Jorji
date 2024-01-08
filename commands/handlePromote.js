@@ -13,6 +13,7 @@ async function handlePromoteCommand(interaction, guildId) {
     }
 
     const usernameInput = options.getString('username');
+    const reasonInput = options.getString('reason');
     
     const operatorUserId = await verifyUser(interaction, user.id);
     if (!operatorUserId) return;

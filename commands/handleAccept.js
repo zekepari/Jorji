@@ -10,15 +10,21 @@ async function handleAcceptCommand(interaction, guildId) {
         return;
     }
 
-    const username = options.getString('username');
+    const usernameInput = options.getString('username');
+    const reasonInput = options.getString('reason');
     let userId;
 
     try {
-        userId = await noblox.getIdFromUsername(username);
+        userId = await noblox.getIdFromUsername(usernameInput);
     } catch (error) {
         console.error(error);
-        await interaction.reply(`Failed to find Roblox user with username: ${username}.`);
+        await interaction.reply(`Failed to find Roblox user with username: ${usernameInput}.`);
         return;
+    }
+
+    const actualUsername = await noblox.getUsernameFromId(targetUserId);
+    if (!actualUsername) {
+        return reply(interaction, `Failed to get the actual username for the provided ID.`);
     }
 
     const operatorUserId = await verifyUser(interaction, user.id);
@@ -38,9 +44,9 @@ async function handleAcceptCommand(interaction, guildId) {
 
         if (joinRequest) {
             await noblox.handleJoinRequest(group.groupId, userId, true);
-            await interaction.reply(`Join request from user ${username} has been accepted.`);
+            await interaction.reply(`Join request from user ${actualUsername} has been accepted.`);
         } else {
-            await interaction.reply(`No join request found for user ${username}.`);
+            await interaction.reply(`No join request found for user ${actualUsername}.`);
         }
     } catch (error) {
         console.error(error);
