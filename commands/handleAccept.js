@@ -1,16 +1,16 @@
-const noblox = require('noblox.js');
-const config = require('../config');
+import noblox from 'noblox.js';
+import { acceptTable, divisionIdTable } from '../config.js';
 
-async function handleRankCommand(interaction, guildId) {
+async function handleAcceptCommand(interaction, guildId) {
     const { options, user, channelId } = interaction;
+    const division = divisionIdTable[guildId];
 
-    if (channelId !== config.discordChannelIdTable.Army) {
-        await interaction.reply('This command can only be used in the Army rank channel.');
+    if (channelId !== division.rankChannelId) {
+        await interaction.reply('This command can only be used in the rank channel.');
         return;
     }
 
     const username = options.getString('username');
-    const roleName = options.getString('role');
     let userId;
 
     try {
@@ -21,46 +21,58 @@ async function handleRankCommand(interaction, guildId) {
         return;
     }
 
-    // Get the roles of the user who issued the command
-    const member = await interaction.guild.members.fetch(user.id);
-    const userRoles = member.roles.cache;
+    const operatorUserId = await verifyUser(interaction, user.id);
+    if (!operatorUserId) return;
 
-    // Find the highest Army role of the user
-    let userHighestArmyRole = '';
-    Object.entries(config.rankToDiscordRoleIdTable.Army).forEach(([rankName, roleId]) => {
-        if (userRoles.has(roleId) && !userHighestArmyRole) {
-            userHighestArmyRole = rankName;
-        }
-    });
+    const userRankInfo = await getUserRankInfo(interaction, division.groupId, operatorUserId);
+    if (!userRankInfo) return;
 
-    // Check if user has permission to rank others
-    if (!userHighestArmyRole) {
-        await interaction.reply('You do not have permission to use this command.');
-        return;
-    }
-
-    // Check if the user can assign the specified role
-    const maxAssignableRoles = config.rankingTable.Army[userHighestArmyRole] || [];
-    if (!maxAssignableRoles.includes(roleName)) {
-        await interaction.reply(`You do not have permission to assign the role ${roleName}.`);
+    const canAccept = acceptTable[division.name].includes(userRankInfo.rankName);
+    if (!canAccept) {
+        await interaction.reply(`You do not have permission to accept join requests.`);
         return;
     }
 
     try {
-        const groupRoles = await noblox.getRoles(config.groupIdTable.Army);
-        const role = groupRoles.find(role => role.name.toLowerCase() === roleName.toLowerCase());
+        const joinRequest = await noblox.getJoinRequest(division.groupId, userId);
 
-        if (!role) {
-            await interaction.reply('Role not found.');
-            return;
+        if (joinRequest) {
+            await noblox.handleJoinRequest(division.groupId, userId, true);
+            await interaction.reply(`Join request from user ${username} has been accepted.`);
+        } else {
+            await interaction.reply(`No join request found for user ${username}.`);
         }
-
-        await noblox.setRank({ group: config.groupIdTable.Army, target: userId, rank: role.rank });
-        await interaction.reply(`User ${username} has been ranked to role ${roleName}.`);
     } catch (error) {
         console.error(error);
         await interaction.reply('There was an error executing the command.');
     }
 }
 
-module.exports = handleRankCommand;
+async function verifyUser(interaction, userId) {
+    try {
+        let response = await fetch(`https://api.blox.link/v4/public/guilds/1168540731506425917/discord-to-roblox/${userId}`, {
+            headers: { "Authorization": process.env.BLOXLINK_API_KEY }
+        });
+        let data = await response.json();
+
+        return data.robloxID;
+    } catch (error) {
+        console.error(error);
+        await reply(interaction, 'There was an error verifying your account.');
+        return null;
+    }
+}
+
+async function getUserRankInfo(interaction, groupId, userId) {
+    try {
+        const rankName = await noblox.getRankNameInGroup(groupId, userId);
+        const rankLevel = await noblox.getRankInGroup(groupId, userId);
+        return { rankName, rankLevel };
+    } catch (error) {
+        console.error(error);
+        await reply(interaction, 'There was an error getting your Roblox group rank.');
+        return null;
+    }
+}
+
+export default handleAcceptCommand;
