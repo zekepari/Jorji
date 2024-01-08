@@ -1,11 +1,11 @@
 import noblox from 'noblox.js';
-import { acceptTable, divisionIdTable } from '../config.js';
+import { divisionAcceptTable, guildIdTable } from '../config.js';
 
 async function handleAcceptCommand(interaction, guildId) {
     const { options, user, channelId } = interaction;
-    const division = divisionIdTable[guildId];
+    const group = guildIdTable[guildId];
 
-    if (channelId !== division.rankChannelId) {
+    if (channelId !== group.rankChannelId) {
         await interaction.reply('This command can only be used in the rank channel.');
         return;
     }
@@ -24,20 +24,20 @@ async function handleAcceptCommand(interaction, guildId) {
     const operatorUserId = await verifyUser(interaction, user.id);
     if (!operatorUserId) return;
 
-    const userRankInfo = await getUserRankInfo(interaction, division.groupId, operatorUserId);
+    const userRankInfo = await getUserRankInfo(interaction, group.groupId, operatorUserId);
     if (!userRankInfo) return;
 
-    const canAccept = acceptTable[division.name].includes(userRankInfo.rankName);
+    const canAccept = divisionAcceptTable[group.name].includes(userRankInfo.rankName);
     if (!canAccept) {
         await interaction.reply(`You do not have permission to accept join requests.`);
         return;
     }
 
     try {
-        const joinRequest = await noblox.getJoinRequest(division.groupId, userId);
+        const joinRequest = await noblox.getJoinRequest(group.groupId, userId);
 
         if (joinRequest) {
-            await noblox.handleJoinRequest(division.groupId, userId, true);
+            await noblox.handleJoinRequest(group.groupId, userId, true);
             await interaction.reply(`Join request from user ${username} has been accepted.`);
         } else {
             await interaction.reply(`No join request found for user ${username}.`);

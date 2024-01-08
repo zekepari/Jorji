@@ -1,17 +1,18 @@
 import noblox from 'noblox.js';
-import { rankingTable, divisionIdTable } from '../config.js';
+import { guildIdTable, promotionTable } from '../config.js';
 
-async function handleRankCommand(interaction, guildId) {
-    const { options, user, channelId } = interaction;
-    const division = divisionIdTable[guildId];
-    const rankChannelId = division.rankChannelId;
+async function handlePromoteCommand(interaction, guildId) {
+    const { options, user, channelId, guild } = interaction;
+    const group = guildIdTable[guildId];
+    const rankChannelId = group.rankChannelId;
+
+    const isServerOwner = (guild.ownerId === user.id)
 
     if (channelId !== rankChannelId) {
         return reply(interaction, 'This command can only be used in the rank channel.');
     }
 
     const usernameInput = options.getString('username');
-    const roleName = options.getString('role');
     
     const operatorUserId = await verifyUser(interaction, user.id);
     if (!operatorUserId) return;
@@ -24,10 +25,10 @@ async function handleRankCommand(interaction, guildId) {
         return reply(interaction, `Failed to get the actual username for the provided ID.`);
     }
 
-    const userRankInfo = await getUserRankInfo(interaction, division.groupId, operatorUserId);
+    const userRankInfo = await getUserRankInfo(interaction, group.groupId, operatorUserId);
     if (!userRankInfo) return;
 
-    const targetUserRankLevel = await getTargetUserRankLevel(interaction, division.groupId, targetUserId);
+    const targetUserRankLevel = await getTargetUserRankLevel(interaction, group.groupId, targetUserId);
     if (targetUserRankLevel === undefined) return;
 
     if (targetUserRankLevel === 0) {
@@ -35,15 +36,23 @@ async function handleRankCommand(interaction, guildId) {
     }
 
     if (targetUserRankLevel >= userRankInfo.rankLevel) {
-        return reply(interaction, 'You cannot rank a user who has a higher rank than you.');
+        return reply(interaction, 'You cannot promote a user who has a higher or equal rank than you.');
     }
 
-    const maxAssignableRoles = rankingTable[division.name][userRankInfo.rankName] || [];
-    if (!maxAssignableRoles.includes(roleName)) {
-        return reply(interaction, `You do not have permission to assign the role ${roleName}.`);
+    const groupRoles = await noblox.getRoles(group.groupId);
+    const currentRankIndex = groupRoles.findIndex(role => role.rank === targetUserRankLevel);
+    if (!isServerOwner && (currentRankIndex === -1 || currentRankIndex === groupRoles.length - 1)) {
+        return reply(interaction, `Cannot promote user ${actualUsername} further.`);
     }
 
-    await assignRole(interaction, division.groupId, targetUserId, roleName, targetUserRankLevel, actualUsername);
+    const nextRank = groupRoles[currentRankIndex + 1];
+
+    const maxPromotableRanks = promotionTable[group.name][userRankInfo.rankName];
+    if (!isServerOwner && (!maxPromotableRanks || !maxPromotableRanks.includes(nextRank.name))) {
+        return reply(interaction, `You do not have permission to promote ${actualUsername} to ${nextRank.name}.`);
+    }
+
+    await assignRole(interaction, group.groupId, targetUserId, nextRank.name, targetUserRankLevel, actualUsername);
 }
 
 async function verifyUser(interaction, userId) {
@@ -107,7 +116,7 @@ async function assignRole(interaction, groupId, targetUserId, roleName, currentR
         }
 
         await noblox.setRank({ group: groupId, target: targetUserId, rank: roleToAssign.rank });
-        await reply(interaction, `User ${username} has been ranked to role ${roleName}.`);
+        await reply(interaction, `User ${username} has been promoted to ${roleName}.`);
     } catch (error) {
         console.error(error);
         await reply(interaction, 'There was an error executing the command.');
@@ -118,4 +127,4 @@ function reply(interaction, message) {
     interaction.reply(message);
 }
 
-export default handleRankCommand;
+export default handlePromoteCommand;

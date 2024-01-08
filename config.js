@@ -1,4 +1,5 @@
-export const divisionIdTable = {
+// Group info (Key = Guild Id)
+export const guildIdTable = {
   '1168540731506425917': {
     name: 'Main',
     groupId: 33315557,
@@ -26,14 +27,8 @@ export const divisionIdTable = {
   }
 };
 
-export const acceptTable = {
-  Army: ["Glorious Leader", "Deputy Minister", "Generalissimo", "General", "Colonel"],
-  Police: ["Glorious Leader", "Minister", "Deputy Minister", "Chief of Police", "Assistant Chief"],
-  Intelligence: ["Glorious Leader", "Minister", "Deputy Minister", "Intelligence Director", "Assistant Director", "Section Chief"],
-  Admission: ["Glorious Leader", "Minister", "Deputy Minister", "Border Director"],
-}
-
-export const autoRankTable = {
+// What main ranks will users receive based on their divisional rank
+export const mainAutoRankTable = {
   "National Council": {
     Army: ["Minister", "Deputy Minister"],
     Police: ["Minister", "Deputy Minister"],
@@ -48,76 +43,113 @@ export const autoRankTable = {
   },
 }
 
-export const rankingTable = {
-  Main: {
-    "Owner": ["Glorious Leader", "Premier", "Deputy Premier", "National Council", "High Command", "Upper Class", "Middle Class", "Lower Class", "Immigrant", "Outsider"],
-    "Glorious Leader": ["Premier", "Deputy Premier", "National Council", "High Command", "Upper Class"],
-    "Premier": [],
-    "Deputy Premier": [],
-    "National Council": [],
-    "High Command": [],
-    "Upper Class": [],
-    "Middle Class": [],
-    "Lower Class": [],
-    "Immigrant": [],
-    "Outsider": []
-  },
+// What ranks can host events based on their respective division group
+export const divisionHostTable = {
+  Army: ["Glorious Leader", "Deputy Minister", "Generalissimo", "General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant"],
+  Police: ["Glorious Leader", "Minister", "Deputy Minister", "Chief of Police", "Assistant Chief", "Commander", "Captain", "Lieutenant", "Sergeant"],
+  Intelligence: ["Glorious Leader", "Minister", "Deputy Minister", "Intelligence Director", "Assistant Director", "Section Chief", "Head Agent", "Field Agent"],
+  Admission: ["Glorious Leader", "Minister", "Deputy Minister", "Border Director", "Assistant Director"],
+}
+
+// What ranks can accept users into their respective division group
+export const divisionAcceptTable = {
+  Army: ["Glorious Leader", "Deputy Minister", "Generalissimo", "General", "Colonel"],
+  Police: ["Glorious Leader", "Minister", "Deputy Minister", "Chief of Police", "Assistant Chief"],
+  Intelligence: ["Glorious Leader", "Minister", "Deputy Minister", "Intelligence Director", "Assistant Director", "Section Chief"],
+  Admission: ["Glorious Leader", "Minister", "Deputy Minister", "Border Director"],
+}
+
+// What ranks can exile users from their respective division group
+export const divisionExileTable = {
+  Army: ["Glorious Leader", "Deputy Minister"],
+  Police: ["Glorious Leader", "Minister", "Deputy Minister"],
+  Intelligence: ["Glorious Leader", "Minister", "Deputy Minister"],
+  Admission: ["Glorious Leader", "Minister", "Deputy Minister"],
+}
+
+// What ranks each rank can promote in their respective group
+export const promotionTable = {
   Army: {
-    "Owner": ["Glorious Leader", "Deputy Minister", "Generalissimo", "General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
-    "Glorious Leader": ["Minister", "Deputy Minister", "Generalissimo", "General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
-    "Minister": ["General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
-    "Deputy Minister": ["General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
-    "Generalissimo": ["Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
-    "General": ["Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
-    "Colonel": ["Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
+    "Glorious Leader": ["Deputy Minister", "Generalissimo", "General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
+    "Minister": ["Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
+    "Deputy Minister": ["Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
+    "Generalissimo": ["Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
+    "General": ["Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
+    "Colonel": ["Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
+    "Major": ["Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
+    "Captain": ["Sergeant", "Corporal", "Private"],
+    "Lieutenant": ["Corporal", "Private", "Conscript"],
+    "Sergeant Major": ["Conscript"],
+    "Sergeant": ["Conscript"]
+  },
+  Police: {
+    "Glorious Leader": ["Deputy Minister", "Chief of Police", "Assistant Chief", "Commander", "Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable", "Recruit"],
+    "Minister": ["Assistant Chief", "Commander", "Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable", "Recruit"],
+    "Deputy Minister": ["Assistant Chief", "Commander", "Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable", "Recruit"],
+    "Chief of Police": ["Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable", "Recruit"],
+    "Assistant Chief": ["Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable", "Recruit"],
+    "Commander": ["Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable", "Recruit"],
+    "Captain": ["Sergeant", "Detective", "Constable", "Probationary Constable", "Recruit"],
+    "Lieutenant": ["Detective", "Constable", "Probationary Constable", "Recruit"],
+    "Sergeant": ["Recruit"]
+  },
+  Intelligence: {
+    "Glorious Leader": ["Deputy Minister", "Intelligence Director", "Assistant Director", "Section Chief", "Head Agent", "Field Agent", "Probationary Agent", "Intake"],
+    "Minister": ["Assistant Director", "Section Chief", "Head Agent", "Field Agent", "Probationary Agent", "Intake"],
+    "Deputy Minister": ["Assistant Director", "Section Chief", "Head Agent", "Field Agent", "Probationary Agent", "Intake"],
+    "Intelligence Director": ["Head Agent", "Field Agent", "Probationary Agent", "Intake"],
+    "Assistant Director": ["Head Agent", "Field Agent", "Probationary Agent", "Intake"],
+    "Section Chief": ["Field Agent", "Probationary Agent", "Intake"],
+    "Head Agent": ["Probationary Agent", "Intake"],
+    "Field Agent": ["Intake"]
+  },
+  Admission: {
+    "Glorious Leader": ["Deputy Minister", "Border Director", "Assistant Director", "Chief Inspector", "Inspector", "Junior Inspector", "Recruit"],
+    "Minister": ["Assistant Director", "Chief Inspector", "Inspector", "Junior Inspector", "Recruit"],
+    "Deputy Minister": ["Assistant Director", "Chief Inspector", "Inspector", "Junior Inspector", "Recruit"],
+    "Border Director": ["Chief Inspector", "Inspector", "Junior Inspector", "Recruit"],
+    "Assistant Director": ["Inspector", "Junior Inspector", "Recruit"]
+  }
+}
+
+// What ranks each rank can promote in their respective group
+export const demotionTable = {
+  Army: {
+    "Glorious Leader": ["Minister", "Deputy Minister", "Generalissimo", "General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private"],
+    "Minister": ["General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private"],
+    "Deputy Minister": ["General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private"],
+    "Generalissimo": ["Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private"],
+    "General": ["Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private"],
+    "Colonel": ["Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private"],
     "Major": ["Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private"],
     "Captain": ["Sergeant Major", "Sergeant", "Corporal", "Private"],
     "Lieutenant": ["Sergeant", "Corporal", "Private"],
-    "Sergeant Major": ["Private"],
-    "Sergeant": ["Private"],
-    "Corporal": [],
-    "Private": [],
-    "Conscript": []
   },
   Police: {
-    "Owner": ["Glorious Leader", "Minister", "Deputy Minister", "Chief of Police", "Assistant Chief", "Commander", "Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable", "Recruit"],
-    "Glorious Leader": ["Minister", "Deputy Minister", "Chief of Police", "Assistant Chief", "Commander", "Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable", "Recruit"],
-    "Minister": ["Chief of Police", "Assistant Chief", "Commander", "Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable", "Recruit"],
-    "Deputy Minister": ["Chief of Police", "Assistant Chief", "Commander", "Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable", "Recruit"],
-    "Chief of Police": ["Commander", "Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable", "Recruit"],
-    "Assistant Chief": ["Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable", "Recruit"],
+    "Glorious Leader": ["Minister", "Deputy Minister", "Chief of Police", "Assistant Chief", "Commander", "Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable"],
+    "Minister": ["Chief of Police", "Assistant Chief", "Commander", "Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable"],
+    "Deputy Minister": ["Chief of Police", "Assistant Chief", "Commander", "Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable"],
+    "Chief of Police": ["Commander", "Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable"],
+    "Assistant Chief": ["Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable"],
     "Commander": ["Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable"],
     "Captain": ["Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable"],
-    "Lieutenant": ["Sergeant", "Detective", "Constable", "Probationary Constable"],
-    "Sergeant": ["Probationary Constable"],
-    "Detective": [],
-    "Constable": [],
-    "Probationary Constable": [],
-    "Recruit": []
+    "Lieutenant": ["Sergeant", "Detective", "Constable", "Probationary Constable"]
   },
   Intelligence: {
-    "Owner": ["Glorious Leader", "Minister", "Deputy Minister", "Intelligence Director", "Assistant Director", "Section Chief", "Head Agent", "Field Agent", "Probationary Agent", "Intake"],
-    "Glorious Leader": ["Minister", "Deputy Minister", "Intelligence Director", "Assistant Director", "Section Chief", "Head Agent", "Field Agent", "Probationary Agent", "Intake"],
-    "Minister": ["Intelligence Director", "Assistant Director", "Section Chief", "Head Agent", "Field Agent", "Probationary Agent", "Intake"],
-    "Deputy Minister": ["Intelligence Director", "Assistant Director", "Section Chief", "Head Agent", "Field Agent", "Probationary Agent", "Intake"],
-    "Intelligence Director": ["Section Chief", "Head Agent", "Field Agent", "Probationary Agent", "Intake"],
-    "Assistant Director": ["Section Chief", "Head Agent", "Field Agent", "Probationary Agent", "Intake"],
-    "Section Chief": ["Head Agent", "Field Agent", "Probationary Agent", "Intake"],
+    "Glorious Leader": ["Minister", "Deputy Minister", "Intelligence Director", "Assistant Director", "Section Chief", "Head Agent", "Field Agent", "Probationary Agent"],
+    "Minister": ["Intelligence Director", "Assistant Director", "Section Chief", "Head Agent", "Field Agent", "Probationary Agent"],
+    "Deputy Minister": ["Intelligence Director", "Assistant Director", "Section Chief", "Head Agent", "Field Agent", "Probationary Agent"],
+    "Intelligence Director": ["Section Chief", "Head Agent", "Field Agent", "Probationary Agent"],
+    "Assistant Director": ["Section Chief", "Head Agent", "Field Agent", "Probationary Agent"],
+    "Section Chief": ["Head Agent", "Field Agent", "Probationary Agent"],
     "Head Agent": ["Field Agent", "Probationary Agent"],
-    "Field Agent": ["Probationary Agent"],
-    "Probationary Agent": [],
-    "Intake": []
+    "Field Agent": ["Probationary Agent"]
   },
   Admission: {
-    "Owner": ["Glorious Leader", "Minister", "Deputy Minister", "Border Director", "Assistant Director", "Chief Inspector", "Inspector", "Junior Inspector", "Recruit"],
-    "Glorious Leader": ["Minister", "Deputy Minister", "Border Director", "Assistant Director", "Chief Inspector", "Inspector", "Junior Inspector", "Recruit"],
-    "Minister": ["Border Director", "Assistant Director", "Chief Inspector", "Inspector", "Junior Inspector", "Recruit"],
-    "Deputy Minister": ["Border Director", "Assistant Director", "Chief Inspector", "Inspector", "Junior Inspector", "Recruit"],
-    "Border Director": ["Assistant Director", "Chief Inspector", "Inspector", "Junior Inspector", "Recruit"],
-    "Assistant Director": ["Chief Inspector", "Inspector", "Junior Inspector", "Recruit"],
-    "Chief Inspector": [],
-    "Inspector": [],
-    "Junior Inspector": [],
-    "Recruit": []
+    "Glorious Leader": ["Minister", "Deputy Minister", "Border Director", "Assistant Director", "Chief Inspector", "Inspector", "Junior Inspector"],
+    "Minister": ["Border Director", "Assistant Director", "Chief Inspector", "Inspector", "Junior Inspector"],
+    "Deputy Minister": ["Border Director", "Assistant Director", "Chief Inspector", "Inspector", "Junior Inspector"],
+    "Border Director": ["Assistant Director", "Chief Inspector", "Inspector", "Junior Inspector"],
+    "Assistant Director": ["Chief Inspector", "Inspector", "Junior Inspector"]
   }
-};
+}

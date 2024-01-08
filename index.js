@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import setupDiscordCommands from './discordCommands.js';
-import { divisionIdTable } from './config.js';
+import { guildIdTable } from './config.js';
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
 
@@ -15,7 +15,7 @@ client.once('ready', () => {
 });
 
 const getRankChannelIds = () => {
-    return Object.values(divisionIdTable).map(division => division.rankChannelId);
+    return Object.values(guildIdTable).map(division => division.rankChannelId);
 };
 
 const rankChannelIds = getRankChannelIds();
