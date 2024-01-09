@@ -1,4 +1,4 @@
-import { Client, GatewayIntentBits, PermissionsBitField } from 'discord.js';
+import { Client, GatewayIntentBits } from 'discord.js';
 import noblox from 'noblox.js';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -21,7 +21,7 @@ const getRankChannelIds = () => {
 const rankChannelIds = getRankChannelIds();
 
 client.on('messageCreate', message => {
-    if (rankChannelIds.includes(message.channel.id) && message.author.id !== client.user.id && !message.member.permissions.has([PermissionsBitField.Flags.Administrator])) {
+    if (rankChannelIds.includes(message.channel.id) && message.author.id !== client.user.id) {
         message.delete()
             .catch(console.error);
     }

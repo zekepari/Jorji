@@ -1,4 +1,5 @@
 import noblox from 'noblox.js';
+import autoRank from '../autoRank.js';
 import { guildIdTable, promotionTable } from '../config.js';
 
 async function handlePromoteCommand(interaction, guildId) {
@@ -54,6 +55,7 @@ async function handlePromoteCommand(interaction, guildId) {
     }
 
     await assignRole(interaction, group.groupId, targetUserId, nextRank.name, targetUserRankLevel, actualUsername);
+    await autoRank(targetUserId, group, nextRank.name);
 }
 
 async function verifyUser(interaction, userId) {
