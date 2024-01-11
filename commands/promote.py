@@ -48,7 +48,7 @@ async def promote_command(interaction: Interaction, roblox_client: roblox.Client
     promoted_role = next((role for role in group_roles if role.rank == target_user_role.rank + 1), None)
 
     max_promotable_ranks = promotion_table[group_data['name']][operator_user_role.name]
-    if promoted_role.name not in max_promotable_ranks:
+    if promoted_role.name not in max_promotable_ranks or max_promotable_ranks is None:
         await interaction.followup.send(f"Cannot promote {target_user.name} as you do not have authority to assign {promoted_role.name}s.")
         return
 

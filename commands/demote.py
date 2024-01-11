@@ -48,7 +48,7 @@ async def demote_command(interaction: Interaction, roblox_client: roblox.Client,
     demoted_role = next((role for role in group_roles if role.rank == target_user_role.rank - 1), None)
 
     max_demotable_ranks = demotion_table[group_data['name']][operator_user_role.name]
-    if demoted_role.name not in max_demotable_ranks:
+    if demoted_role.name not in max_demotable_ranks or max_demotable_ranks is None:
         await interaction.followup.send(f"Cannot accept {target_user.name} as you do not have authority to assign {demoted_role.name}s.")
         return
 
