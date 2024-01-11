@@ -42,6 +42,7 @@ async def promote(interaction: discord.Interaction, username: str, reason: str):
 async def demote(interaction: discord.Interaction, username: str, reason: str):
     await interaction.response.defer()
     await demote_command(interaction, roblox_client, username, reason)
+    print('test')
 
 @bot.slash_command(guild_ids=list(guild_id_table.keys()), description='Accept a user into a Roblox group')
 @discord.option('username', description='The Roblox username', required=True)
