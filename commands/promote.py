@@ -19,11 +19,11 @@ async def promote_command(interaction: Interaction, roblox_client: roblox.Client
         conv_username_roblox_user(roblox_client, username)
     )
 
-    if operator_user == None:
+    if operator_user is None:
         await interaction.followup.send('There was an error getting your Roblox account.')
         return
 
-    if target_user == None:
+    if target_user is None:
         await interaction.followup.send(f"There was an error getting {username}'s Roblox account.")
         return
 
@@ -32,11 +32,18 @@ async def promote_command(interaction: Interaction, roblox_client: roblox.Client
         get_roblox_user_role(target_user, group_data.get('group_id'))
     )
 
-    if operator_user_role == None:
+    if operator_user_role is None:
         await interaction.followup.send(f"There was an error getting your group role.")
         return
-
-    if target_user_role == None:
+    """
+    print(get_main_group_id)
+    print(operator_user_primary_role)
+    
+    if operator_user_primary_role.group.id is not get_main_group_id():
+        await interaction.followup.send(f"Cannot promote {target_user.name} as Arstotzka is not your primary group.")
+        return
+    """
+    if target_user_role is None:
         await interaction.followup.send(f"There was an error getting {target_user.name}'s group role.")
         return
 
@@ -54,6 +61,11 @@ async def promote_command(interaction: Interaction, roblox_client: roblox.Client
 
     await interaction.followup.send(f'Promoted {target_user.name} to {promoted_role.name} for reason: {reason}.')
     await group.set_rank(target_user, promoted_role.rank)
+
+def get_main_group_id():
+    for key, value in guild_id_table.items():
+        if value['name'] == 'Main':
+            return value['group_id']
 
 async def conv_discord_roblox_user(discord_user_id: str, roblox_client: roblox.Client):
     try:
