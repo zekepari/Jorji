@@ -1,10 +1,10 @@
 FROM python:3.11
 
-WORKDIR /robloranker
+WORKDIR /jorji
 
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . /robloranker
+COPY . /jorji
 
 CMD ["python", "./main.py"]
