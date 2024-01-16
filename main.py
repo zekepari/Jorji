@@ -50,9 +50,5 @@ async def accept(interaction: discord.Interaction, username: str):
     await interaction.response.defer()
     await accept_command(interaction, roblox_client, username)
 
-@bot.slash_command(guild_ids=list(guild_id_table.keys()), description='Ping the bot')
-async def ping(interaction: discord.Interaction):
-    await interaction.response.send_message('Pong!')
-
 asyncio.get_event_loop().run_until_complete(start_roblox())
 bot.run(DISCORD_BOT_TOKEN)
