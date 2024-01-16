@@ -1,9 +1,9 @@
 import roblox
 import os
-import requests
 from dotenv import load_dotenv
 from discord import Interaction
 from tables import guild_id_table, demotion_table
+from util import conv_discord_roblox_user, conv_username_roblox_user, get_roblox_user_role
 import asyncio
 
 load_dotenv()
@@ -54,33 +54,3 @@ async def demote_command(interaction: Interaction, roblox_client: roblox.Client,
 
     await interaction.followup.send(f'Demoted {target_user.name} to {demoted_role.name} for reason: {reason}.')
     await group.set_rank(target_user, demoted_role.rank)
-
-async def conv_discord_roblox_user(discord_user_id: str, roblox_client: roblox.Client):
-    try:
-        url = f"https://api.blox.link/v4/public/guilds/1168540731506425917/discord-to-roblox/{discord_user_id}"
-        headers = {"Authorization": BLOXLINK_API_KEY}
-
-        req = requests.get(url, headers=headers)
-        data = req.json()
-
-        roblox_user_id = data.get('robloxID')
-
-        roblox_user = await roblox_client.get_user(roblox_user_id)
-        return roblox_user
-    except Exception as e:
-        print(e)
-        return None
-
-async def conv_username_roblox_user(robloxBot: roblox.Client, username: str):
-    try:
-        return await robloxBot.get_user_by_username(username)
-    except roblox.UserNotFound:
-        return None
-
-async def get_roblox_user_role(roblox_user, group_id: int):
-    roblox_user_roles = await roblox_user.get_group_roles()
-    roblox_user_role = None
-    for role in roblox_user_roles:
-        if role.group.id == group_id:
-            roblox_user_role = role
-    return roblox_user_role
