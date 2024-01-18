@@ -73,7 +73,7 @@ promotion_table = {
         "Sergeant": ["Conscript"]
     },
     'Police': {
-        "Owner": ["Minister", "Deputy Minister", "Generalissimo", "General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
+        "Owner": ["Minister", "Deputy Minister", "Chief of Police", "Assistant Chief", "Commander", "Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable", "Recruit"],
         "Glorious Leader": ["Deputy Minister", "Chief of Police", "Assistant Chief", "Commander", "Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable", "Recruit"],
         "Minister": ["Assistant Chief", "Commander", "Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable", "Recruit"],
         "Deputy Minister": ["Assistant Chief", "Commander", "Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable", "Recruit"],
@@ -85,7 +85,7 @@ promotion_table = {
         "Sergeant": ["Recruit"]
     },
     'Intelligence': {
-        "Owner": ["Minister", "Deputy Minister", "Generalissimo", "General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
+        "Owner": ["Minister", "Deputy Minister", "Intelligence Director", "Assistant Director", "Section Chief", "Head Agent", "Field Agent", "Probationary Agent", "Intake"],
         "Glorious Leader": ["Deputy Minister", "Intelligence Director", "Assistant Director", "Section Chief", "Head Agent", "Field Agent", "Probationary Agent", "Intake"],
         "Minister": ["Assistant Director", "Section Chief", "Head Agent", "Field Agent", "Probationary Agent", "Intake"],
         "Deputy Minister": ["Assistant Director", "Section Chief", "Head Agent", "Field Agent", "Probationary Agent", "Intake"],
@@ -96,7 +96,7 @@ promotion_table = {
         "Field Agent": ["Intake"]
     },
     'Admission': {
-        "Owner": ["Minister", "Deputy Minister", "Generalissimo", "General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
+        "Owner": ["Minister", "Deputy Minister", "Border Director", "Assistant Director", "Chief Inspector", "Inspector", "Junior Inspector", "Recruit"],
         "Glorious Leader": ["Deputy Minister", "Border Director", "Assistant Director", "Chief Inspector", "Inspector", "Junior Inspector", "Recruit"],
         "Minister": ["Assistant Director", "Chief Inspector", "Inspector", "Junior Inspector", "Recruit"],
         "Deputy Minister": ["Assistant Director", "Chief Inspector", "Inspector", "Junior Inspector", "Recruit"],
@@ -119,7 +119,7 @@ demotion_table = {
         "Lieutenant": ["Sergeant", "Corporal", "Private"],
     },
     'Police': {
-        "Owner": ["Glorious Leader", "Minister", "Deputy Minister", "Generalissimo", "General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private"],
+        "Owner": ["Glorious Leader", "Minister", "Deputy Minister", "Chief of Police", "Assistant Chief", "Commander", "Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable"],
         "Glorious Leader": ["Minister", "Deputy Minister", "Chief of Police", "Assistant Chief", "Commander", "Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable"],
         "Minister": ["Chief of Police", "Assistant Chief", "Commander", "Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable"],
         "Deputy Minister": ["Chief of Police", "Assistant Chief", "Commander", "Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable"],
@@ -130,7 +130,7 @@ demotion_table = {
         "Lieutenant": ["Sergeant", "Detective", "Constable", "Probationary Constable"]
     },
     'Intelligence': {
-        "Owner": ["Glorious Leader", "Minister", "Deputy Minister", "Generalissimo", "General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private"],
+        "Owner": ["Glorious Leader", "Minister", "Deputy Minister", "Intelligence Director", "Assistant Director", "Section Chief", "Head Agent", "Field Agent", "Probationary Agent"],
         "Glorious Leader": ["Minister", "Deputy Minister", "Intelligence Director", "Assistant Director", "Section Chief", "Head Agent", "Field Agent", "Probationary Agent"],
         "Minister": ["Intelligence Director", "Assistant Director", "Section Chief", "Head Agent", "Field Agent", "Probationary Agent"],
         "Deputy Minister": ["Intelligence Director", "Assistant Director", "Section Chief", "Head Agent", "Field Agent", "Probationary Agent"],
@@ -141,7 +141,7 @@ demotion_table = {
         "Field Agent": ["Probationary Agent"]
     },
     'Admission': {
-        "Owner": ["Glorious Leader", "Minister", "Deputy Minister", "Generalissimo", "General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private"],
+        "Owner": ["Glorious Leader", "Minister", "Deputy Minister", "Border Director", "Assistant Director", "Chief Inspector", "Inspector", "Junior Inspector"],
         "Glorious Leader": ["Minister", "Deputy Minister", "Border Director", "Assistant Director", "Chief Inspector", "Inspector", "Junior Inspector"],
         "Minister": ["Border Director", "Assistant Director", "Chief Inspector", "Inspector", "Junior Inspector"],
         "Deputy Minister": ["Border Director", "Assistant Director", "Chief Inspector", "Inspector", "Junior Inspector"],
