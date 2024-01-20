@@ -59,16 +59,16 @@ exile_table = {
 
 promotion_table = {
     'Army': {
-        "Owner": ["Minister", "Deputy Minister", "Generalissimo", "General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
-        "Glorious Leader": ["Deputy Minister", "Generalissimo", "General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
-        "Minister": ["Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
-        "Deputy Minister": ["Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
-        "Generalissimo": ["Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
-        "General": ["Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
-        "Colonel": ["Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
-        "Major": ["Sergeant Major", "Sergeant", "Corporal", "Private", "Conscript"],
-        "Captain": ["Sergeant", "Corporal", "Private"],
-        "Lieutenant": ["Corporal", "Private", "Conscript"],
+        "Owner": ["Minister", "Deputy Minister", "Generalissimo", "General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Lance Corporal", "Private", "Conscript"],
+        "Glorious Leader": ["Deputy Minister", "Generalissimo", "General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Lance Corporal", "Private", "Conscript"],
+        "Minister": ["Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Lance Corporal", "Private", "Conscript"],
+        "Deputy Minister": ["Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Lance Corporal", "Private", "Conscript"],
+        "Generalissimo": ["Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Lance Corporal", "Private", "Conscript"],
+        "General": ["Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Lance Corporal", "Private", "Conscript"],
+        "Colonel": ["Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Lance Corporal", "Private", "Conscript"],
+        "Major": ["Sergeant Major", "Sergeant", "Corporal", "Lance Corporal", "Private", "Conscript"],
+        "Captain": ["Sergeant", "Corporal", "Lance Corporal", "Private"],
+        "Lieutenant": ["Corporal", "Lance Corporal", "Private", "Conscript"],
         "Sergeant Major": ["Conscript"],
         "Sergeant": ["Conscript"]
     },
@@ -107,16 +107,16 @@ promotion_table = {
 
 demotion_table = {
     'Army': {
-        "Owner": ["Glorious Leader", "Minister", "Deputy Minister", "Generalissimo", "General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private"],
-        "Glorious Leader": ["Minister", "Deputy Minister", "Generalissimo", "General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private"],
-        "Minister": ["General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private"],
-        "Deputy Minister": ["General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private"],
-        "Generalissimo": ["Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private"],
-        "General": ["Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private"],
-        "Colonel": ["Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private"],
-        "Major": ["Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Private"],
-        "Captain": ["Sergeant Major", "Sergeant", "Corporal", "Private"],
-        "Lieutenant": ["Sergeant", "Corporal", "Private"],
+        "Owner": ["Glorious Leader", "Minister", "Deputy Minister", "Generalissimo", "General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Lance Corporal", "Private"],
+        "Glorious Leader": ["Minister", "Deputy Minister", "Generalissimo", "General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Lance Corporal", "Private"],
+        "Minister": ["General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Lance Corporal", "Private"],
+        "Deputy Minister": ["General", "Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Lance Corporal", "Private"],
+        "Generalissimo": ["Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Lance Corporal", "Private"],
+        "General": ["Colonel", "Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Lance Corporal", "Private"],
+        "Colonel": ["Major", "Captain", "Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Lance Corporal", "Private"],
+        "Major": ["Lieutenant", "Sergeant Major", "Sergeant", "Corporal", "Lance Corporal", "Private"],
+        "Captain": ["Sergeant Major", "Sergeant", "Corporal", "Lance Corporal", "Private"],
+        "Lieutenant": ["Sergeant", "Corporal", "Lance Corporal", "Private"],
     },
     'Police': {
         "Owner": ["Glorious Leader", "Minister", "Deputy Minister", "Chief of Police", "Assistant Chief", "Commander", "Captain", "Lieutenant", "Sergeant", "Detective", "Constable", "Probationary Constable"],
