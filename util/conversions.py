@@ -1,14 +1,21 @@
+import os
+from dotenv import load_dotenv
 import roblox
 import requests
+from util.roblox import get_roblox_client
+
+load_dotenv()
+
+ROLINKER_KEY = os.getenv('ROLINKER_KEY')
 
 async def roblox_to_discord_id(roblox_id: str):
     try:
-        url = f"http://arstotzka_rolinker_1:3000/roblox-to-discord?id={roblox_id}"
+        url = f"https://rolinker.net/api/convert/roblox-to-discord?robloxId={roblox_id}"
 
         req = requests.get(url)
         data = req.json()
 
-        discord_id = data.get('discordId')
+        discord_id = data.get('userId')
 
         return discord_id
     except Exception as e:
@@ -17,19 +24,23 @@ async def roblox_to_discord_id(roblox_id: str):
 
 async def discord_to_roblox_id(discord_id: str):
     try:
-        url = f"http://arstotzka_rolinker_1:3000/discord-to-roblox?id={discord_id}"
-
-        req = requests.get(url)
+        url = f"https://rolinker.net/api/guilds/members/associated-account?userId={discord_id}"
+        headers = {
+            "Authorization": ROLINKER_KEY
+        }
+        req = requests.get(url, headers=headers)
         data = req.json()
 
-        roblox_id = data.get('robloxId')
+        roblox_id = data.get('id')
 
         return roblox_id
     except Exception as e:
         print(e)
         return None
 
-async def conv_discord_roblox_user(discord_user_id: str, roblox_client: roblox.Client):
+async def conv_discord_roblox_user(discord_user_id: str):
+    roblox_client = get_roblox_client()
+
     try:
         roblox_id = await discord_to_roblox_id(discord_user_id)
 
@@ -39,9 +50,11 @@ async def conv_discord_roblox_user(discord_user_id: str, roblox_client: roblox.C
         print(e)
         return None
 
-async def conv_username_roblox_user(robloxBot: roblox.Client, username: str):
+async def conv_username_roblox_user(username: str):
+    roblox_client = get_roblox_client()
+
     try:
-        return await robloxBot.get_user_by_username(username)
+        return await roblox_client.get_user_by_username(username)
     except roblox.UserNotFound:
         return None
 

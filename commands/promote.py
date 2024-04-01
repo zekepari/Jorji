@@ -1,22 +1,18 @@
-import roblox
-import os
-from dotenv import load_dotenv
 from discord import Interaction
-from tables import guild_id_table, promotion_table
-from util import conv_discord_roblox_user, conv_username_roblox_user, get_roblox_user_role
+from tables import promotion_table
+from util.conversions import conv_discord_roblox_user, conv_username_roblox_user, get_roblox_user_role
 import asyncio
+from util.roblox import get_roblox_client
+from util.tiers import guild_groups
 
-load_dotenv()
-
-BLOXLINK_API_KEY = os.getenv('BLOXLINK_API_KEY')
-
-async def promote_command(interaction: Interaction, roblox_client: roblox.Client, username: str, reason: str):
-    group_data = guild_id_table[interaction.guild_id]
+async def promote_command(interaction: Interaction, username: str, reason: str):
+    roblox_client = get_roblox_client()
+    group_data = guild_groups[interaction.guild_id]
     group = await roblox_client.get_group(group_data.get('group_id'))
 
     operator_user, target_user = await asyncio.gather(
-        conv_discord_roblox_user(interaction.user.id, roblox_client),
-        conv_username_roblox_user(roblox_client, username)
+        conv_discord_roblox_user(interaction.user.id),
+        conv_username_roblox_user(username)
     )
 
     if operator_user is None:
@@ -35,14 +31,7 @@ async def promote_command(interaction: Interaction, roblox_client: roblox.Client
     if operator_user_role is None:
         await interaction.followup.send(f"There was an error getting your group role.")
         return
-    """
-    print(get_main_group_id)
-    print(operator_user_primary_role)
     
-    if operator_user_primary_role.group.id is not get_main_group_id():
-        await interaction.followup.send(f"Cannot promote {target_user.name} as Arstotzka is not your primary group.")
-        return
-    """
     if target_user_role is None:
         await interaction.followup.send(f"There was an error getting {target_user.name}'s group role.")
         return
@@ -61,8 +50,3 @@ async def promote_command(interaction: Interaction, roblox_client: roblox.Client
 
     await interaction.followup.send(f'Promoted {target_user.name} to {promoted_role.name} for reason: {reason}.')
     await group.set_rank(target_user, promoted_role.rank)
-
-def get_main_group_id():
-    for key, value in guild_id_table.items():
-        if value['name'] == 'Main':
-            return value['group_id']

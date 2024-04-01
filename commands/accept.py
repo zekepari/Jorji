@@ -1,22 +1,17 @@
-import roblox
-import os
-from dotenv import load_dotenv
 from discord import Interaction
-from tables import guild_id_table, accept_table
-from util import conv_discord_roblox_user, conv_username_roblox_user, get_roblox_user_role
+from util.conversions import conv_discord_roblox_user, conv_username_roblox_user, get_roblox_user_role
 import asyncio
+from util.roblox import get_roblox_client
+from util.tiers import guild_groups
 
-load_dotenv()
-
-BLOXLINK_API_KEY = os.getenv('BLOXLINK_API_KEY')
-
-async def accept_command(interaction: Interaction, roblox_client: roblox.Client, username: str):
-    group_data = guild_id_table[interaction.guild_id]
+async def accept_command(interaction: Interaction, username: str):
+    roblox_client = get_roblox_client()
+    group_data = guild_groups[interaction.guild_id]
     group = await roblox_client.get_group(group_data.get('group_id'))
 
     operator_user, target_user = await asyncio.gather(
-        conv_discord_roblox_user(interaction.user.id, roblox_client),
-        conv_username_roblox_user(roblox_client, username),
+        conv_discord_roblox_user(interaction.user.id),
+        conv_username_roblox_user(username),
     )
 
     if operator_user == None:
