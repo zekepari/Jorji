@@ -3,10 +3,14 @@ from dotenv import load_dotenv
 import roblox
 import requests
 from util.roblox import get_roblox_client
+from roblox.roles import Role
 
 load_dotenv()
 
 ROLINKER_KEY = os.getenv('ROLINKER_KEY')
+
+async def update_roles():
+    return
 
 async def roblox_to_discord_id(roblox_id: str):
     try:

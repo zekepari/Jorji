@@ -2,10 +2,11 @@ import os
 import asyncio
 import discord
 from dotenv import load_dotenv
-from tables import guild_id_table
+from util.tiers import guild_groups
 from commands.promote import promote_command
 from commands.demote import demote_command
 from commands.accept import accept_command
+from commands.exile import exile_command
 from util.roblox import get_roblox_client
 
 load_dotenv()
@@ -25,25 +26,33 @@ async def start_roblox():
 async def on_ready():
     print(f'Logged on as {bot.user}')
 
-@bot.slash_command(guild_ids=list(guild_id_table.keys()), description='Promote a user in a Roblox group')
-@discord.option('username', description='The Roblox username', required=True)
-@discord.option('reason', description='The reason for the promotion', required=True)
+@bot.slash_command(guild_ids=list(guild_groups.keys()), description='promote a user in a Roblox group')
+@discord.option('username', description='the Roblox username', required=True)
+@discord.option('reason', description='the reason for the promotion', required=True)
 async def promote(interaction: discord.Interaction, username: str, reason: str):
     await interaction.response.defer()
     await promote_command(interaction, username, reason)
 
-@bot.slash_command(guild_ids=list(guild_id_table.keys()), description='Demote a user in a Roblox group')
-@discord.option('username', description='The Roblox username', required=True)
-@discord.option('reason', description='The reason for the demotion', required=True)
+@bot.slash_command(guild_ids=list(guild_groups.keys()), description='demote a user in a Roblox group')
+@discord.option('username', description='the Roblox username', required=True)
+@discord.option('reason', description='the reason for the demotion', required=True)
 async def demote(interaction: discord.Interaction, username: str, reason: str):
     await interaction.response.defer()
     await demote_command(interaction, username, reason)
 
-@bot.slash_command(guild_ids=list(guild_id_table.keys()), description='Accept a user into a Roblox group')
-@discord.option('username', description='The Roblox username', required=True)
-async def accept(interaction: discord.Interaction, username: str):
+@bot.slash_command(guild_ids=list(guild_groups.keys()), description='exile a user from a Roblox group')
+@discord.option('username', description='the Roblox username', required=True)
+@discord.option('reason', description='the reason for the exile', required=True)
+async def exile(interaction: discord.Interaction, username: str, reason: str):
     await interaction.response.defer()
-    await accept_command(interaction, username)
+    await exile_command(interaction, username, reason)
+
+@bot.slash_command(guild_ids=list(guild_groups.keys()), description='accept a user into a Roblox group')
+@discord.option('username', description='the Roblox username', required=True)
+@discord.option('reason', description='the reason for the acceptance', required=True)
+async def accept(interaction: discord.Interaction, username: str, reason: str):
+    await interaction.response.defer()
+    await accept_command(interaction, username, reason)
 
 asyncio.get_event_loop().run_until_complete(start_roblox())
 bot.run(DISCORD_BOT_TOKEN)
