@@ -48,12 +48,12 @@ async def promote_command(interaction: Interaction, username: str, reason: str):
         else:
             permissible_tiers = [key for key, value in promote_permissions.items() if target_user_tier in value]
             if len(permissible_tiers) == 0:
-                result = "No keys found"
+                result = "🛠️ Tier"
             elif len(permissible_tiers) == 1:
-                result = permissible_tiers[0]
+                result = permissible_tiers[0] + " Tier"
             else:
-                result = ", ".join(permissible_tiers[:-1]) + f", and {permissible_tiers[-1]}"
-            await interaction.followup.send(f"You cannot promote {target_user.name}. Only {result} Tier(s) have permission to promote {target_user_tier} Tier.")
+                result = ", ".join(permissible_tiers[:-1]) + f", and {permissible_tiers[-1]} Tiers"
+            await interaction.followup.send(f"You cannot promote {target_user.name}. Only members in {result} have permission to promote {target_user_tier} Tier members.")
     else: # indicitive of tier promotion
         if target_user_tier in tierPromote_permissions[operator_user_tier]: # is the new target tier in the operators capacity?
             await interaction.followup.send(f'Promoted {target_user.name} to {promoted_role.name} for reason: {reason}.')
@@ -62,12 +62,12 @@ async def promote_command(interaction: Interaction, username: str, reason: str):
         else:
             permissible_tiers = [key for key, value in tierPromote_permissions.items() if target_user_tier in value]
             if len(permissible_tiers) == 0:
-                result = "No keys found"
+                result = "🛠️"
             elif len(permissible_tiers) == 1:
                 result = permissible_tiers[0]
             else:
                 result = ", ".join(permissible_tiers[:-1]) + f", and {permissible_tiers[-1]}"
-            await interaction.followup.send(f"You cannot promote {target_user.name}. Only {result} Tier(s) have permission to promote {target_user_tier} Tier.")
+            await interaction.followup.send(f"You cannot promote {target_user.name}. Only members in {result} have permission to graduate {target_user_tier} Tier members.")
 
 def get_tier(rank, group_name):
     for rank_range, tier in tier_ranges[group_name].items():
