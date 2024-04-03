@@ -12,7 +12,7 @@ ROLINKER_ARSTOTZKA_KEY = os.getenv('ROLINKER_ARSTOTZKA_KEY')
 async def update_roles(roblox_id: str, api_key: str):
     target_user_discord_id = await roblox_to_discord_id(roblox_id)
     if target_user_discord_id:
-        url = f"https://rolinker/guilds/members/update-roles?userId={target_user_discord_id}"
+        url = f"https://rolinker.net/api/guilds/members/update-roles?userId={target_user_discord_id}"
         headers = {
             "Authorization": api_key
         }
@@ -28,7 +28,7 @@ async def roblox_to_discord_id(roblox_id: str):
             "Authorization": ROLINKER_ARSTOTZKA_KEY
         }
 
-        req = requests.get(url, headers={headers})
+        req = requests.get(url, headers=headers)
         data = req.json()
 
         discord_id = data.get('userId')
