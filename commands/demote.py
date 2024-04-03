@@ -1,5 +1,6 @@
 from discord import Interaction
-from util.conversions import conv_discord_roblox_user, conv_username_roblox_user, get_roblox_user_role
+import requests
+from util.conversions import conv_discord_roblox_user, conv_username_roblox_user, get_roblox_user_role, roblox_to_discord_id, update_roles
 from util.roblox import get_roblox_client
 from util.tiers import guild_groups, tier_ranges, demote_permissions
 from roblox.roles import Role
@@ -41,6 +42,7 @@ async def demote_command(interaction: Interaction, username: str, reason: str):
     if target_user_tier in demote_permissions[operator_user_tier]: # is the new target tier in the operator's capacity?
         await interaction.followup.send(f'Demoted {target_user.name} to {demoted_role.name} for reason: {reason}.')
         await group.set_rank(target_user, demoted_role.rank)
+        await update_roles(target_user.id, group_data.get('api_key'))
     else:
         permissible_tiers = [key for key, value in demote_permissions.items() if target_user_tier in value]
         if len(permissible_tiers) == 0:

@@ -7,16 +7,28 @@ from roblox.roles import Role
 
 load_dotenv()
 
-ROLINKER_KEY = os.getenv('ROLINKER_KEY')
+ROLINKER_ARSTOTZKA_KEY = os.getenv('ROLINKER_ARSTOTZKA_KEY')
 
-async def update_roles():
+async def update_roles(roblox_id: str, api_key: str):
+    target_user_discord_id = await roblox_to_discord_id(roblox_id)
+    if target_user_discord_id:
+        url = f"https://rolinker/guilds/members/update-roles?userId={target_user_discord_id}"
+        headers = {
+            "Authorization": api_key
+        }
+
+        requests.post(url, headers=headers)
+
     return
 
 async def roblox_to_discord_id(roblox_id: str):
     try:
         url = f"https://rolinker.net/api/convert/roblox-to-discord?robloxId={roblox_id}"
+        headers = {
+            "Authorization": ROLINKER_ARSTOTZKA_KEY
+        }
 
-        req = requests.get(url)
+        req = requests.get(url, headers={headers})
         data = req.json()
 
         discord_id = data.get('userId')
@@ -30,7 +42,7 @@ async def discord_to_roblox_id(discord_id: str):
     try:
         url = f"https://rolinker.net/api/guilds/members/associated-account?userId={discord_id}"
         headers = {
-            "Authorization": ROLINKER_KEY
+            "Authorization": ROLINKER_ARSTOTZKA_KEY
         }
         req = requests.get(url, headers=headers)
         data = req.json()
