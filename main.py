@@ -8,6 +8,7 @@ from commands.demote import demote_command
 from commands.accept import accept_command
 from commands.exile import exile_command
 from util.roblox import get_roblox_client
+from http_server import start_http_server
 
 load_dotenv()
 DISCORD_BOT_TOKEN = os.getenv('DISCORD_BOT_TOKEN')
@@ -54,5 +55,9 @@ async def accept(interaction: discord.Interaction, username: str, reason: str):
     await interaction.response.defer()
     await accept_command(interaction, username, reason)
 
-asyncio.get_event_loop().run_until_complete(start_roblox())
-bot.run(DISCORD_BOT_TOKEN)
+async def main():
+    await start_roblox()
+    await start_http_server()
+    await bot.start(DISCORD_BOT_TOKEN)
+
+asyncio.run(main())

@@ -40,12 +40,12 @@ async def accept_command(interaction: Interaction, username: str, reason: str):
     else:
         permissible_tiers = [key for key, value in accept_permissions.items() if value]
         if len(permissible_tiers) == 0:
-            result = "No keys found"
+            result = "🛠️ Tier"
         elif len(permissible_tiers) == 1:
-            result = permissible_tiers[0]
+            result = permissible_tiers[0] + " Tier"
         else:
-            result = ", ".join(permissible_tiers[:-1]) + f", and {permissible_tiers[-1]}"
-        await interaction.followup.send(f"You cannot accept {target_user.name}. Only {result} Tier(s) have permission to accept join requests.")
+            result = ", ".join(permissible_tiers[:-1]) + f", and {permissible_tiers[-1]} Tiers"
+        await interaction.followup.send(f"You cannot accept {target_user.name}. Only members in {result} have permission to accept join requests.")
 
 def get_tier(rank, group_name):
     for rank_range, tier in tier_ranges[group_name].items():

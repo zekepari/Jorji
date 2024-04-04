@@ -1,5 +1,5 @@
 from discord import Interaction
-from util.conversions import conv_discord_roblox_user, conv_username_roblox_user, get_roblox_user_role
+from util.conversions import conv_discord_roblox_user, conv_username_roblox_user, get_roblox_user_role, roblox_to_discord_id
 from util.roblox import get_roblox_client
 from util.tiers import guild_groups, tier_ranges, exile_permissions
 from roblox.roles import Role
@@ -38,15 +38,17 @@ async def exile_command(interaction: Interaction, username: str, reason: str):
     if target_user_tier in exile_permissions[operator_user_tier]: # is the new target tier in the operator's capacity?
         await interaction.followup.send(f'Exiled {target_user.name} for reason: {reason}.')
         await group.kick_user(target_user)
+        target_discord_user = await roblox_to_discord_id(target_user.id)
+        await interaction.guild.kick(target_discord_user)
     else:
         permissible_tiers = [key for key, value in exile_permissions.items() if target_user_tier in value]
         if len(permissible_tiers) == 0:
-            result = "No keys found"
+            result = "🛠️ Tier"
         elif len(permissible_tiers) == 1:
-            result = permissible_tiers[0]
+            result = permissible_tiers[0] + " Tier"
         else:
-            result = ", ".join(permissible_tiers[:-1]) + f", and {permissible_tiers[-1]}"
-        await interaction.followup.send(f"You cannot demote {target_user.name}. Only {result} Tier(s) have permission to exile {target_user_tier} Tier.")
+            result = ", ".join(permissible_tiers[:-1]) + f", and {permissible_tiers[-1]} Tiers"
+        await interaction.followup.send(f"You cannot exile {target_user.name}. Only members in {result} have permission to exile {target_user_tier} Tier members.")
 
 def get_tier(rank, group_name):
     for rank_range, tier in tier_ranges[group_name].items():
