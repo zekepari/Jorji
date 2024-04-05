@@ -58,6 +58,6 @@ async def accept(interaction: discord.Interaction, username: str, reason: str):
 async def main():
     await start_roblox()
     await start_http_server()
-    await bot.start(DISCORD_BOT_TOKEN)
 
 asyncio.run(main())
+bot.run(DISCORD_BOT_TOKEN)
